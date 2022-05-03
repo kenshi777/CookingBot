@@ -4,9 +4,9 @@ import requests
 from pprint import pprint
 
 def get_meal(meal):
-    try:
+    #try:
         r = requests.get(
-            f"http://www.themealdb.com/api/json/v1/1/search.php?s={message.text}"
+            f"http://www.themealdb.com/api/json/v1/1/search.php?s={meal}"
         ).json()
         name = r['meals'][0]['strMeal']
         country = r['meals'][0]['strArea']
@@ -21,13 +21,17 @@ def get_meal(meal):
         for m in range(1, 20):
             if (r['meals'][0][f'strMeasure{m}'] != '') and (r['meals'][0][f'strMeasure{m}'] != None) and (r['meals'][0][f'strMeasure{m}'] != ' '):
                 measures_list.append(r['meals'][0][f'strMeasure{m}'])
+        ingredients_result = []
+        for l in range(len(ingredients_list)):
+            ingredients_result.append(ingredients_list[l]+' '+measures_list[l])
+
         tags = r['meals'][0]['strTags']
         video = r['meals'][0]['strYoutube']
         print(
-            f"Meal: {name}\nCountry: {country}\nCategory: {category}\nIngredients: {ingredients_list}\nMesaures: {measures_list}\nInstruction: {instruction}\nTags: {tags}\nYoutube: {video}\nEnjoy your meal!"
+            f"Meal: {name}\nCountry: {country}\nCategory: {category}\nIngredients: {ingredients_result}\nInstruction: {instruction}\nTags: {tags}\nYoutube: {video}\nEnjoy your meal!"
         )
-    except:
-        print("Unknown meal!")
+    #except:
+        #print("Unknown meal!")
 
 def main():
     meal = input("Enter meal: ")
