@@ -1,3 +1,4 @@
+from email import message
 from unicodedata import name
 import requests
 from pprint import pprint
@@ -5,9 +6,8 @@ from pprint import pprint
 def get_meal(meal):
     try:
         r = requests.get(
-            f"http://www.themealdb.com/api/json/v1/1/search.php?s={meal}"
+            f"http://www.themealdb.com/api/json/v1/1/search.php?s={message.text}"
         ).json()
-        #pprint(r)
         name = r['meals'][0]['strMeal']
         country = r['meals'][0]['strArea']
         category = r['meals'][0]['strCategory']
@@ -26,8 +26,7 @@ def get_meal(meal):
         print(
             f"Meal: {name}\nCountry: {country}\nCategory: {category}\nIngredients: {ingredients_list}\nMesaures: {measures_list}\nInstruction: {instruction}\nTags: {tags}\nYoutube: {video}\nEnjoy your meal!"
         )
-    except Exception as ex:
-        print(ex)
+    except:
         print("Unknown meal!")
 
 def main():
